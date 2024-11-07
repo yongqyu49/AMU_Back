@@ -1,0 +1,11 @@
+package com.myspringweb.amu_back.domain.dto;
+
+import lombok.Data;
+import java.sql.Timestamp;
+
+@Data
+public class FavoriteDTO {
+    private String id;
+    private int musicCode;
+    private Timestamp likeDate;
+}
