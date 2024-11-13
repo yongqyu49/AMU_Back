@@ -36,4 +36,14 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public int signIn(UserDTO userDTO) {
+        if(userDAO.getUserById(userDTO.getId()) == null)
+            return 0;
+        if(passwordEncoder.matches(userDTO.getPassword(), userDAO.getUserById(userDTO.getId()).getPassword())) {
+            return 1;
+        } else return -1;
+    }
+
+
 }

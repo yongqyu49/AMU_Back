@@ -25,4 +25,9 @@ public class UserDAOImpl implements UserDAO {
         return sqlSession.insert("user.signUp", userDTO);
     }
 
+//    @Override
+//    public int signIn(UserDTO userDTO) {
+//        return sqlSession.selectOne("user.signIn", userDTO);
+//    }
+
 }

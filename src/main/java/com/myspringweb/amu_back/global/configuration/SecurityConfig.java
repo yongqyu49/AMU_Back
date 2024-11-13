@@ -46,7 +46,7 @@ public class SecurityConfig {
 
         // 권한 설정
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/user/signUp").permitAll() // 인증이 필요하지 않은 경로
+                .requestMatchers("/user/signUp", "/user/signIn").permitAll() // 인증이 필요하지 않은 경로
                 .requestMatchers("/admin").hasRole("ADMIN") // ADMIN 권한이 필요한 경로
                 .anyRequest().authenticated() // 그 외의 요청은 인증 필요
         );
