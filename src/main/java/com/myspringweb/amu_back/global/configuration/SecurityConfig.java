@@ -46,7 +46,7 @@ public class SecurityConfig {
 
         // 권한 설정
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(getExcludeUrls()).permitAll() // 인증이 필요하지 않은 경로
+                .requestMatchers("/user/signUp").permitAll() // 인증이 필요하지 않은 경로
                 .requestMatchers("/admin").hasRole("ADMIN") // ADMIN 권한이 필요한 경로
                 .anyRequest().authenticated() // 그 외의 요청은 인증 필요
         );
@@ -59,10 +59,10 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // exclude URLs를 반환하는 메서드 추가 (필요 시 구현)
-    private String[] getExcludeUrls() {
-        return new String[]{"/api/**"}; // 예시로 "/api/**" 경로를 인증 없이 접근 가능하게 설정
-    }
+//    // exclude URLs를 반환하는 메서드 추가 (필요 시 구현)
+//    private String[] getExcludeUrls() {
+//        return new String[]{"/user/signUp", "/api/**"}; // 예시로 "/api/**" 경로를 인증 없이 접근 가능하게 설정
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
