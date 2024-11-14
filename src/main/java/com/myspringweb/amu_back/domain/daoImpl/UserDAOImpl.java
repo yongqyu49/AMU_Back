@@ -13,11 +13,12 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public UserDTO getUserById(String id) {
-        try {
-            return sqlSession.selectOne("user.getUserById", id);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to fetch user with id: " + id, e);
-        }
+        return sqlSession.selectOne("user.getUserById", id);
+    }
+
+    @Override
+    public int signUp(UserDTO userDTO) {
+        return sqlSession.insert("user.signUp", userDTO);
     }
 
 }
