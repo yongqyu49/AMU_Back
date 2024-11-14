@@ -31,16 +31,29 @@ public class UserController {
     @PostMapping("/signIn")
     public ResponseEntity<String> signIn(@RequestBody UserDTO userDTO, HttpSession session) {
         System.out.println("로그인 요청");
-        int result = userService.signIn(userDTO);
+        UserDTO user = userService.signIn(userDTO);
 
-        if (result == 0) {
-            return ResponseEntity.badRequest().body("존재하지 않는 아이디입니다.");
-        } else if (result == 1) {
-            session.setAttribute("id", userDTO.getId());
-            session.setAttribute("artist", userDTO.getArtist());
-            return ResponseEntity.ok("로그인 성공");
+        if (user == null)
+            return ResponseEntity.badRequest().body("존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
+
+        session.setAttribute("id", user.getId());
+        session.setAttribute("artist", user.getArtist());
+        return ResponseEntity.ok("로그인 성공");
+    }
+
+
+    // 세션 확인
+    @GetMapping("/current")
+    public ResponseEntity<UserDTO> getCurrentUser(HttpSession session) {
+        String id = (String) session.getAttribute("id");
+        String artist = (String) session.getAttribute("artist");
+        if (id != null && artist != null) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(id);
+            userDTO.setArtist(artist);
+            return ResponseEntity.ok(userDTO);
         } else {
-            return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
+            return ResponseEntity.status(401).body(null);
         }
     }
 
