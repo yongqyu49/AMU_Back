@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="music">
+    <select id="uploadMusic" parameterType="Music">
+        insert into music(title, lyrics, mp3_path, img_path, genre_code, release_date, file_size, runtime, genre_code, id) VALUES (#{title}, #{lyrics}, #{mp3_path}, #{img_path}, #{genre_code}, #{release_data}, #{file_size}, #{runtime}, #{genre_code}, #{id})
+    </select>
+</mapper>
