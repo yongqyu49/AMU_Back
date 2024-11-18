@@ -16,11 +16,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDTO getUserById(String id) {
-        return userDAO.getUserById(id);
-    }
-
-    @Override
     public int signUp(UserDTO userDTO) {
         int result = 0;
         if (userDAO.getUserById(userDTO.getId()) != null) {

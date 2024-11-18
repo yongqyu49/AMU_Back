@@ -1,7 +1,9 @@
 package com.myspringweb.amu_back.global.configuration;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,6 +18,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -46,13 +49,37 @@ public class SecurityConfig {
 
         // 권한 설정
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/user/signUp", "/user/signIn", "/user/current").permitAll()
+                .requestMatchers(
+                        "/", "/user/signUp", "/user/signIn", "/user/current",
+                        "playlist/play/**"
+                ).permitAll()
+                .requestMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
+        );
+
+        http.exceptionHandling(exception ->
+                exception.accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.setContentType("application/json");
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.getWriter().write("{\"error\": \"Access Denied: You are not allowed to access this resource.\"}");
+                })
         );
 
         // 세션 관리 설정
         http.sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // 세션이 항상 생성되도록 설정
+                session
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // 세션이 항상 생성되도록 설정
+                        .maximumSessions(1) // 최대 세션 수 1개로 설정
+                        .maxSessionsPreventsLogin(true) // 동시 로그인 차단
+        );
+
+        http.logout(logout -> logout
+                .logoutUrl("/user/signOut")
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    response.setContentType("application/json");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.getWriter().write("{\"message\": \"Logout Successful\"}");
+                })
         );
 
         return http.build();

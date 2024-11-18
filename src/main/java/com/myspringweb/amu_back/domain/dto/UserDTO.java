@@ -7,5 +7,6 @@ public class UserDTO {
     private String id;
     private String password;
     private String artist;
+    private String role;
 }
 

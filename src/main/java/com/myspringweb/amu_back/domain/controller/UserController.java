@@ -8,6 +8,7 @@ import jakarta.websocket.Session;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class UserController {
 
         session.setAttribute("id", user.getId());
         session.setAttribute("artist", user.getArtist());
+        session.setAttribute("role", user.getRole());
         return ResponseEntity.ok("로그인 성공");
     }
 
@@ -47,6 +49,7 @@ public class UserController {
     public ResponseEntity<UserDTO> getCurrentUser(HttpSession session) {
         String id = (String) session.getAttribute("id");
         String artist = (String) session.getAttribute("artist");
+        String role = (String) session.getAttribute("role");
         if (id != null && artist != null) {
             UserDTO userDTO = new UserDTO();
             userDTO.setId(id);
@@ -55,6 +58,14 @@ public class UserController {
         } else {
             return ResponseEntity.status(401).body(null);
         }
+    }
+
+    @PostMapping("/signOut")
+//    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<String> signOut(HttpSession session) {
+        System.out.println("POST 요청 받음: /signOut");
+        session.invalidate();
+        return ResponseEntity.ok("로그아웃 성공");
     }
 
 }

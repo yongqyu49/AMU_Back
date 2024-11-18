@@ -10,7 +10,7 @@
     </select>
 
     <select id="signUp" parameterType="User" resultType="Integer">
-        insert into user(id, password, artist) VALUES (#{id}, #{password}, #{artist})
+        insert into user(id, password, artist, role) VALUES (#{id}, #{password}, #{artist}, default)
     </select>
 
 
