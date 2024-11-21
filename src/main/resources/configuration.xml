@@ -5,5 +5,6 @@
 	<typeAliases>
         <typeAlias type="com.myspringweb.amu_back.domain.dto.UserDTO" alias="User"/>
 		<typeAlias type="com.myspringweb.amu_back.domain.dto.MusicDTO" alias="Music"/>
+		<typeAlias type="com.myspringweb.amu_back.domain.dto.PlaylistDTO" alias="Playlist"/>
 	</typeAliases>
 </configuration>

@@ -1,5 +1,6 @@
 package com.myspringweb.amu_back.domain.controller;
 
+import com.myspringweb.amu_back.domain.service.PlaylistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -15,8 +16,8 @@ import java.nio.file.Paths;
 @RequiredArgsConstructor
 @RequestMapping("/playlist")
 public class PlaylistController {
-
     private final Path audioDirectory = Paths.get("C:\\AMU Music");
+    private final PlaylistService playlistService;
 
     @GetMapping("/play/{filename}")
     public Resource getAudio(@PathVariable String filename) throws Exception {

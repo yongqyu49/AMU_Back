@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .configurationSource(request -> {
                     CorsConfiguration corsConfiguration = new CorsConfiguration();
                     corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-                    corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST"));
+                    corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
                     corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
                     corsConfiguration.setAllowCredentials(true); // 세션 유지 허용
                     corsConfiguration.setMaxAge(3600L);
@@ -51,7 +51,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                         "/", "/user/signUp", "/user/signIn", "/user/current",
-                        "playlist/play/**"
+                        "/music/play/**", "/music/list"
                 ).permitAll()
                 .requestMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
