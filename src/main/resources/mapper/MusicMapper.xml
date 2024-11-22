@@ -4,8 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="music">
+
     <insert id="uploadMusic" parameterType="Music">
-        insert into music(title, lyrics, mp3_path, img_path, genre_code, release_date, file_size, runtime, genre_code, id)
-        VALUES (#{title}, #{lyrics}, #{mp3_path}, #{img_path}, #{genre_code}, #{release_data}, #{file_size}, #{runtime}, #{genre_code}, #{id})
+        insert into music(title, lyrics, mp3_path, img_path, genre_code, release_date, file_size, runtime, genre_code, id) VALUES (#{title}, #{lyrics}, #{mp3_path}, #{img_path}, #{genre_code}, #{release_data}, #{file_size}, #{runtime}, #{genre_code}, #{id})
     </insert>
+
+    <select id="getAllMusic" resultType="Music">
+        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist from music
+    </select>
+
+    <!-- 특정 음악 조회 -->
+    <select id="getMusicById" resultType="Music">
+        SELECT * FROM music WHERE music_code = #{id}
+    </select>
+
 </mapper>

@@ -6,6 +6,8 @@ import com.myspringweb.amu_back.domain.service.MusicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MusicServiceImpl implements MusicService {
@@ -16,4 +18,16 @@ public class MusicServiceImpl implements MusicService {
         int result = musicDAO.uploadMusic(musicDTO);
         return result > 0;
     }
+
+    @Override
+    public List<MusicDTO> getAllMusic() {
+        return musicDAO.getAllMusic();
+    }
+
+    @Override
+    public MusicDTO getMusicById(int id) {
+        return musicDAO.getMusicById(id);
+    }
+
+
 }

@@ -9,9 +9,9 @@
         SELECT * FROM user WHERE id = #{id}
     </select>
 
-    <select id="signUp" parameterType="User" resultType="Integer">
+    <insert id="signUp" parameterType="User">
         insert into user(id, password, artist, role) VALUES (#{id}, #{password}, #{artist}, default)
-    </select>
+    </insert>
 
 
 
