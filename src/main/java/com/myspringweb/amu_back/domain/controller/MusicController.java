@@ -85,7 +85,7 @@ public class MusicController {
     public ResponseEntity<Resource> playMusic(@PathVariable String filename) throws Exception {
         System.out.println("음악 재생 filename: " + filename);
         filename = filename + ".mp3";
-        Path file = Paths.get("C:/AMU Music").resolve(filename).normalize(); // 정확한 파일 경로 설정
+        Path file = Paths.get("C:/AMU/AMU Music").resolve(filename).normalize(); // 정확한 파일 경로 설정
         System.out.println("file: " + file);
         Resource resource = new UrlResource(file.toUri());
         System.out.println("resource: " + resource);
