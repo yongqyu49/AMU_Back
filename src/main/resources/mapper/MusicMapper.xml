@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="music">
-    <select id="uploadMusic" parameterType="Music">
-        insert into music(title, lyrics, mp3_path, img_path, genre_code, release_date, file_size, runtime, genre_code, id) VALUES (#{title}, #{lyrics}, #{mp3_path}, #{img_path}, #{genre_code}, #{release_data}, #{file_size}, #{runtime}, #{genre_code}, #{id})
-    </select>
+    <insert id="uploadMusic" parameterType="Music">
+        insert into music(title, lyrics, mp3_path, img_path, genre_code, release_date, file_size, runtime, genre_code, id)
+        VALUES (#{title}, #{lyrics}, #{mp3_path}, #{img_path}, #{genre_code}, #{release_data}, #{file_size}, #{runtime}, #{genre_code}, #{id})
+    </insert>
 </mapper>
