@@ -13,5 +13,5 @@ public class ReviewDTO {
     private int reviewLike;
 
     private String id;
-    private int musicId;
+    private int musicCode;
 }
