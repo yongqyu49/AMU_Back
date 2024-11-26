@@ -28,15 +28,15 @@ public class MusicController {
     @PostMapping("/upload")
 
     public ResponseEntity<?> uploadMusic(
-            @RequestPart("fileMp3") MultipartFile fileMp3,
-            @RequestPart("fileImg") MultipartFile fileImg,
-            @RequestPart("fileSize") String fileSize,
+            @RequestPart("title") String title,
+            @RequestPart("lyrics") String lyrics,
             @RequestPart("filePath1") String filePath1,
             @RequestPart("filePath2") String filePath2,
+            @RequestPart("fileSize") String fileSize,
+//            @RequestPart("fileMp3") MultipartFile fileMp3,
+//            @RequestPart("fileImg") MultipartFile fileImg,
             @RequestPart("playTime") String playTime,
-            @RequestPart("title") String title,
             @RequestPart("genre") String genre,
-            @RequestPart("lyrics") String lyrics,
             HttpSession session) { //@Valid: 정규식
         System.out.println("음악 업로드");
 
@@ -46,7 +46,7 @@ public class MusicController {
         musicDTO.setId(id);
 
         long realFileSize = Long.parseLong(fileSize);
-        int runTIme = Integer.parseInt(playTime);
+        int runTime = Integer.parseInt(playTime);
 
         musicDTO.setMusicCode(1); //int
         musicDTO.setTitle(title);
@@ -55,11 +55,11 @@ public class MusicController {
         musicDTO.setMp3Path(filePath1);
         musicDTO.setImgPath(filePath2);
         musicDTO.setFileSize(realFileSize);
-        musicDTO.setRuntime(runTIme);
+        musicDTO.setRuntime(runTime);
         musicDTO.setViews(1);
         musicDTO.setGenreCode(1); //int
         musicDTO.setId(id);  // 현재 세션의 사용자 ID 설정
-
+        System.out.println("삽입");
 
 
         boolean isUploaded = musicService.uploadMusic(musicDTO);
@@ -69,6 +69,7 @@ public class MusicController {
         }else{
             System.out.println("업로드 실패");
             return ResponseEntity.badRequest().body("업로드 실패");
+//            System.out.println(title, lyrics, filePath1, filePath2, realFileSize, runTime, id);
         }
     }
 
