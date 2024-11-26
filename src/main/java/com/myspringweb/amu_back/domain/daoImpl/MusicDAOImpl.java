@@ -2,6 +2,7 @@ package com.myspringweb.amu_back.domain.daoImpl;
 
 import com.myspringweb.amu_back.domain.dao.MusicDAO;
 import com.myspringweb.amu_back.domain.dto.MusicDTO;
+import com.myspringweb.amu_back.domain.dto.ReviewDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,18 @@ public class MusicDAOImpl implements MusicDAO {
     @Override
     public MusicDTO getMusicById(int id) {
         return sqlSession.selectOne("music.getMusicById", id);
+    }
+
+    @Override
+    public List<ReviewDTO> getReviewByMusicCode(int musicCode) {
+        return sqlSession.selectList("music.getReviewByMusicCode", musicCode);
+    }
+
+    @Override
+    public int uploadReview(ReviewDTO reviewDTO) {
+        int result = sqlSession.insert("music.uploadReview", reviewDTO);
+        System.out.println("업로드??  " + result);
+        return result;
     }
 }
 
