@@ -18,4 +18,13 @@
         SELECT * FROM music WHERE music_code = #{id}
     </select>
 
+    <select id="getReviewByMusicCode" parameterType="Integer" resultType="Review">
+        select review_id reviewId, review_contents reviewContents, review_depth reviewDepth, review_regdate reviewRegdate, review_like reviewLike, parent_id parentId, id, music_code musicCode from review where music_code = #{music_code} order by review_regdate desc;
+    </select>
+
+    <insert id="uploadReview" parameterType="Review">
+        insert into review(review_id, review_contents, review_depth, review_regdate, review_like, parent_id, id, music_code)
+        values((select nextval('REVIEW_ID_SEQ') from dual), #{reviewContents}, 0, default,   0, null, #{id}, #{musicCode})
+    </insert>
+
 </mapper>

@@ -2,6 +2,7 @@ package com.myspringweb.amu_back.domain.serviceImpl;
 
 import com.myspringweb.amu_back.domain.dao.MusicDAO;
 import com.myspringweb.amu_back.domain.dto.MusicDTO;
+import com.myspringweb.amu_back.domain.dto.ReviewDTO;
 import com.myspringweb.amu_back.domain.service.MusicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,16 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public MusicDTO getMusicById(int id) {
         return musicDAO.getMusicById(id);
+    }
+
+    @Override
+    public List<ReviewDTO> getReviewByMusicCode(int musicCode) {
+        return musicDAO.getReviewByMusicCode(musicCode);
+    }
+
+    @Override
+    public int uploadReview(ReviewDTO reviewDTO) {
+        return musicDAO.uploadReview(reviewDTO);
     }
 
 
