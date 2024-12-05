@@ -16,8 +16,17 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public boolean uploadMusic(MusicDTO musicDTO){
-        int result = musicDAO.uploadMusic(musicDTO);
-        return result > 0;
+        try {
+            System.out.println("=== Service 레벨 시작 ===");
+            int result = musicDAO.uploadMusic(musicDTO);
+            System.out.println("DAO 결과: " + result);
+            return result > 0;
+        } catch (Exception e) {
+            System.out.println("=== Service 레벨 에러 ===");
+            System.out.println("에러 메시지: " + e.getMessage()); 
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

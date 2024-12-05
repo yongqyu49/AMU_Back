@@ -6,7 +6,8 @@
 <mapper namespace="music">
 
     <insert id="uploadMusic" parameterType="Music">
-        insert into music(title, lyrics, mp3_path, img_path, genre_code, release_date, file_size, runtime, genre_code, id) VALUES (#{title}, #{lyrics}, #{mp3_path}, #{img_path}, #{genre_code}, #{release_data}, #{file_size}, #{runtime}, #{genre_code}, #{id})
+        insert into music(music_code, title, lyrics, mp3_path, img_path, genre_code, release_date, file_size, runtime, id, views)
+        VALUES ((select nextval('MUSIC_CODE_SEQ') FROM dual), #{title}, #{lyrics}, #{mp3Path}, #{imgPath}, #{genreCode}, #{releaseDate}, #{fileSize}, #{runtime}, #{id}, #{views})
     </insert>
 
     <select id="getAllMusic" resultType="Music">
