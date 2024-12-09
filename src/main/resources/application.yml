@@ -17,8 +17,9 @@ spring:
 
   web:
     resources:
-      static-locations: file:///C:/AMU_Asset/AMU Img/
+      static-locations: file:///C:/AMU_asset/AMU Img/
 
 mybatis:
   config-location: classpath:configuration.xml
   mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.myspringweb.amu_back.domain.dto

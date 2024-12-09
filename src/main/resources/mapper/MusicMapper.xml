@@ -14,7 +14,6 @@
         select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist from music
     </select>
 
-    <!-- 특정 음악 조회 -->
     <select id="getMusicById" resultType="Music">
         SELECT * FROM music WHERE music_code = #{id}
     </select>
@@ -27,5 +26,29 @@
         insert into review(review_id, review_contents, review_depth, review_regdate, review_like, parent_id, id, music_code)
         values((select nextval('REVIEW_ID_SEQ') from dual), #{reviewContents}, 0, default,   0, null, #{id}, #{musicCode})
     </insert>
+
+    <select id="getAllMusicLatest" resultType="Music">
+        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist from music order by release_date desc
+    </select>
+
+    <select id="getDefaultPlayList" parameterType="String" resultType="Music">
+        SELECT m.music_code musicCode, m.title, m.lyrics, m.release_date releaseDate, m.mp3_path mp3Path, m.img_path imgPath, m.file_size fileSize, m.runtime, m.views, m.genre_code genreCode, m.id artist
+        FROM music m
+                 JOIN playlist_music pm ON m.music_code = pm.music_code
+                 JOIN playlist p ON pm.playlist_code = p.playlist_code
+        WHERE p.id = #{id}
+    </select>
+
+    <insert id="likeMusic" parameterType="Favorite">
+        insert into favorite(music_code, id) values(#{musicCode}, #{id})
+    </insert>
+
+    <delete id="unlikeMusic" parameterType="Favorite">
+        delete from favorite where music_code = #{musicCode} and id = #{id}
+    </delete>
+
+    <select id="isLikedMusic" parameterType="Favorite" resultType="Integer">
+        select count(*) from favorite where music_code = #{musicCode} and id = #{id}
+    </select>
 
 </mapper>
