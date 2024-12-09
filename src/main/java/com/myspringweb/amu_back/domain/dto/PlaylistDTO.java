@@ -7,5 +7,6 @@ public class PlaylistDTO {
     private int playlistCode;
     private String playlistName;
     private String id;
+    private int musicCode;
 }
 
