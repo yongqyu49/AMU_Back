@@ -24,52 +24,63 @@ import java.util.List;
 @RequestMapping("/music")
 public class MusicController {
     private final MusicService musicService;
-    private final Path audioDirectory = Paths.get("C:\\AMU Music");
+    // private final Path audioDirectory = Paths.get("C:\\AMU Music");
 
     @PostMapping("/upload")
-
     public ResponseEntity<?> uploadMusic(
-            @RequestPart("fileMp3") MultipartFile fileMp3,
-            @RequestPart("fileImg") MultipartFile fileImg,
-            @RequestPart("fileSize") String fileSize,
-            @RequestPart("filePath1") String filePath1,
-            @RequestPart("filePath2") String filePath2,
-            @RequestPart("playTime") String playTime,
-            @RequestPart("title") String title,
-            @RequestPart("genre") String genre,
-            @RequestPart("lyrics") String lyrics,
-            HttpSession session) { //@Valid: 정규식
-        System.out.println("음악 업로드");
+            @RequestParam("title") String title,
+            @RequestParam("lyrics") String lyrics,
+            @RequestParam("filePath1") String filePath1,
+            @RequestParam("filePath2") String filePath2,
+            @RequestParam("fileSize") String fileSize,
+            @RequestParam("fileMp3") MultipartFile fileMp3,
+            @RequestParam("fileImg") MultipartFile fileImg,
+            @RequestParam("playTime") String playTime,
+            @RequestParam("genre") Integer genre,
+            HttpSession session) {
 
-        MusicDTO musicDTO = new MusicDTO();
-
+        System.out.println("uploadMusic 시작");
         String id = (String) session.getAttribute("id");
-        musicDTO.setArtist(id);
-
-        long realFileSize = Long.parseLong(fileSize);
-        int runTIme = Integer.parseInt(playTime);
-
-        musicDTO.setMusicCode(1); //int
-        musicDTO.setTitle(title);
-        musicDTO.setLyrics(lyrics);
-        musicDTO.setReleaseDate(new Timestamp(System.currentTimeMillis()));
-        musicDTO.setMp3Path(filePath1);
-        musicDTO.setImgPath(filePath2);
-        musicDTO.setFileSize(realFileSize);
-        musicDTO.setRuntime(runTIme);
-        musicDTO.setViews(1);
-        musicDTO.setGenreCode(1); //int
-        musicDTO.setArtist(id);  // 현재 세션의 사용자 ID 설정
-
-
-
-        boolean isUploaded = musicService.uploadMusic(musicDTO);
-        if(isUploaded){
-            System.out.println("업로드 성공");
-            return ResponseEntity.ok("업로드 성공");
-        }else{
-            System.out.println("업로드 실패");
-            return ResponseEntity.badRequest().body("업로드 실패");
+        try {
+            System.out.println("업로드 데이터 확인");
+            System.out.println("title: " + title);
+            System.out.println("lyrics: " + lyrics);
+            System.out.println("filePath1: " + filePath1);
+            System.out.println("filePath2: " + filePath2);
+            System.out.println("fileSize: " + fileSize);
+            System.out.println("playTime: " + playTime);
+            System.out.println("genre: " + genre);
+            System.out.println("id: " + id);
+            
+            MusicDTO musicDTO = new MusicDTO();
+            musicDTO.setTitle(title);
+            musicDTO.setLyrics(lyrics);
+            musicDTO.setMp3Path(filePath1);
+            musicDTO.setImgPath(filePath2);
+            musicDTO.setFileSize(Long.parseLong(fileSize));
+            musicDTO.setRuntime(Integer.parseInt(playTime));
+            musicDTO.setGenreCode(genre);
+            musicDTO.setReleaseDate(new Timestamp(System.currentTimeMillis()));
+            musicDTO.setId(id);
+            musicDTO.setViews(1);
+            
+            System.out.println("삽입 데이터");
+            System.out.println(musicDTO);
+            
+            boolean isUploaded = musicService.uploadMusic(musicDTO);
+            System.out.println("Service 호출");
+            System.out.println("uploadMusic 결과: " + isUploaded);
+            
+            if(isUploaded) {
+                return ResponseEntity.ok("업로드 성공");
+            } else {
+                return ResponseEntity.badRequest().body("업로드 실패");
+            }
+        } catch (Exception e) {
+            System.out.println("=== 에러 발생 지점 확인 ===");
+            System.out.println("에러 클래스: " + e.getClass().getName());
+            System.out.println("에러 메시지: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("서버 오류: " + e.getMessage());
         }
     }
 

@@ -17,7 +17,7 @@ public class MusicDAOImpl implements MusicDAO {
 
     @Override
     public int uploadMusic(MusicDTO musicDTO) {
-        return sqlSession.insert("music.updateMusic", musicDTO);
+        return sqlSession.insert("music.uploadMusic", musicDTO);
     }
 
     @Override
