@@ -2,6 +2,7 @@ package com.myspringweb.amu_back.domain.serviceImpl;
 
 import com.myspringweb.amu_back.domain.dao.UserDAO;
 import com.myspringweb.amu_back.domain.dto.MusicDTO;
+import com.myspringweb.amu_back.domain.dto.ReviewDTO;
 import com.myspringweb.amu_back.domain.dto.UserDTO;
 import com.myspringweb.amu_back.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -60,6 +61,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<MusicDTO> getMyUploadList(String id) {
         return userDAO.getMyUploadList(id);
+    }
+
+    @Override
+    public List<MusicDTO> getMyFavoriteList(String id) {
+        return userDAO.getMyFavoriteList(id);
+    }
+
+    @Override
+    public List<ReviewDTO> getMyReviewList(String id) {
+        return userDAO.getMyReviewList(id);
     }
 
 

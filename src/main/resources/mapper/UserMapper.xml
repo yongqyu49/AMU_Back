@@ -30,21 +30,25 @@
     </update>
 
     <select id="getMyUploadList" parameterType="String" resultType="Music">
-        SELECT * FROM music WHERE id = #{id}
+        SELECT music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist
+        FROM music WHERE id = #{id}
     </select>
 
-    <select id="getMyLikeList" parameterType="String">
-        select * from music where music_code
+    <select id="getMyFavoriteList" parameterType="String" resultType="Music">
+        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist
+        from music where music_code
           in (select music_code from favorite where id = #{id} order by like_date desc)
     </select>
 
     <select id="getMyPlayList" parameterType="String">
-        select * from music where music_code
+        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist
+        from music where music_code
           in (select music_code from playlist_music where playlist_code in (select playlist_code from playlist where id = #{id}));
     </select>
 
-    <select id="getMyReviews" parameterType="String">
-        select * from music where music_code in (select music_code from review where id = #{id})
+    <select id="getMyReviewList" parameterType="String" resultType="Review">
+        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist
+        from music where music_code in (select music_code from review where id = #{id})
     </select>
 
 </mapper>
