@@ -45,5 +45,15 @@ public class UserServiceImpl implements UserService {
             return null; // 비밀번호가 일치하지 않으면 null 반환
     }
 
+    @Override
+    public int updateProfile(UserDTO userDTO) {
+        return userDAO.updateProfile(userDTO);
+    }
+
+    @Override
+    public UserDTO getUserById(String id) {
+        return userDAO.getUserById(id);
+    }
+
 
 }

@@ -4,5 +4,8 @@ import com.myspringweb.amu_back.domain.dto.UserDTO;
 
 public interface UserDAO {
     UserDTO getUserById(String id);
+
     int signUp(UserDTO userDTO);
+
+    int updateProfile(UserDTO userDTO);
 }
