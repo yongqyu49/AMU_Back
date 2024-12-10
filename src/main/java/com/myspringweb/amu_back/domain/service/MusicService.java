@@ -26,4 +26,6 @@ public interface MusicService {
     int unlikeMusic(FavoriteDTO favoriteDTO);
 
     int isLikedMusic(FavoriteDTO favoriteDTO);
+
+    String getImgPathByMusicCode(int musicCode);
 }

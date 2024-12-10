@@ -52,6 +52,7 @@ public class MusicController {
             System.out.println("genre: " + genre);
             System.out.println("id: " + id);
             
+            
             MusicDTO musicDTO = new MusicDTO();
             musicDTO.setTitle(title);
             musicDTO.setLyrics(lyrics);
@@ -61,7 +62,8 @@ public class MusicController {
             musicDTO.setRuntime(Integer.parseInt(playTime));
             musicDTO.setGenreCode(genre);
             musicDTO.setReleaseDate(new Timestamp(System.currentTimeMillis()));
-            musicDTO.setId(id);
+            musicDTO.setArtist(id);
+            System.out.println("Artist after setting: " + musicDTO.getArtist());  // 로그 추가
             musicDTO.setViews(1);
             
             System.out.println("삽입 데이터");
@@ -81,8 +83,41 @@ public class MusicController {
             System.out.println("에러 클래스: " + e.getClass().getName());
             System.out.println("에러 메시지: " + e.getMessage());
             return ResponseEntity.internalServerError().body("서버 오류: " + e.getMessage());
+        }        
+    }
+
+    //이미지 조회
+    @GetMapping("/getMusic/image/{musicCode}")
+    public ResponseEntity<Resource> getImgPathByMusicCode(@PathVariable int musicCode) throws Exception {
+        String music = musicService.getImgPathByMusicCode(musicCode);
+
+        System.out.println("musicCode: " + musicCode);
+        System.out.println("원본 이미지 경로: " + music);
+
+        Path imagePath = Paths.get(music).normalize(); //java.nio.file 사용 //경로생성, 정규화
+        System.out.println("변환된 이미지 경로: " + imagePath.toString());
+        System.out.println("절대 경로: " + imagePath.toAbsolutePath());
+
+        Resource resource = new UrlResource(imagePath.toUri());
+        System.out.println("리소스 URI: " + resource.getURI());
+
+        // 파일이 존재하는지 확인
+        if (resource.exists() && resource.isReadable()) {
+            System.out.println("파일 존재 확인 성공");
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                .body(resource);
+        } else {
+            System.out.println("파일을 찾을 수 없음: " + imagePath);
+            return ResponseEntity.notFound().build();
         }
     }
+
+//    @GetMapping("/sort/{sortType}")
+//    public ResponseEntity<List<MusicDTO>> getMusicSort(@PathVariable String sortType) {
+//        List<MusicDTO> musicList = musicService.getAllMusicSorted(sortType);
+//        return ResponseEntity.ok(musicList);
+//    }
 
     // 음악 목록 조회
     @PostMapping("/list")

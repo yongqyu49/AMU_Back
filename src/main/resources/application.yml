@@ -17,7 +17,7 @@ spring:
 
   web:
     resources:
-      static-locations: file:///C:/AMU_asset/AMU Img/
+      static-locations: file:///C:/AMU_asset/
 
 mybatis:
   config-location: classpath:configuration.xml

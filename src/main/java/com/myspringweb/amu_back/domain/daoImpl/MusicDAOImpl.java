@@ -66,5 +66,13 @@ public class MusicDAOImpl implements MusicDAO {
     public int isLikedMusic(FavoriteDTO favoriteDTO) {
         return sqlSession.selectOne("music.isLikedMusic", favoriteDTO);
     }
+
+    @Override
+    public String getImgPathByMusicCode(int musicCode) {
+        System.out.println("=== DAO 이미지 경로 조회 ===");
+        System.out.println("조회할 musicCode: " + musicCode);
+        System.out.println("조회된 이미지 경로: " + sqlSession.selectOne("music.getImgPathByMusicCode", musicCode));
+        return sqlSession.selectOne("music.getImgPathByMusicCode", musicCode);
+    }
 }
 

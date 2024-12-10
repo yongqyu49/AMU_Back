@@ -7,7 +7,7 @@
 
     <insert id="uploadMusic" parameterType="Music">
         insert into music(music_code, title, lyrics, mp3_path, img_path, genre_code, release_date, file_size, runtime, id, views)
-        VALUES ((select nextval('MUSIC_CODE_SEQ') FROM dual), #{title}, #{lyrics}, #{mp3Path}, #{imgPath}, #{genreCode}, #{releaseDate}, #{fileSize}, #{runtime}, #{id}, #{views})
+        VALUES ((select nextval('MUSIC_CODE_SEQ') FROM dual), #{title}, #{lyrics}, #{mp3Path}, #{imgPath}, #{genreCode}, #{releaseDate}, #{fileSize}, #{runtime}, #{artist}, #{views})
     </insert>
 
     <select id="getAllMusic" resultType="Music">
@@ -49,6 +49,39 @@
 
     <select id="isLikedMusic" parameterType="Favorite" resultType="Integer">
         select count(*) from favorite where music_code = #{musicCode} and id = #{id}
+    </select>
+
+    <select id="getImgPathByMusicCode" parameterType="Integer" resultType="String">
+        SELECT img_path 
+        FROM music 
+        WHERE music_code = #{musicCode}
+    </select>
+
+    <!-- 정렬 쿼리 -->
+    <select id="orderByTitle"  resultType="Music">
+        SELECT * FROM music
+        ORDER BY title ASC
+    </select>
+
+    <select id="orderByDate"  resultType="Music">
+        SELECT * FROM music
+        ORDER BY release_date DESC
+    </select>
+
+    <select id="orderByViews"  resultType="Music">
+        SELECT * FROM music
+        ORDER BY views DESC
+    </select>
+
+    <select id="allOrderBy" parameterType="String" resultType="Music">
+        SELECT * FROM music
+        ORDER BY
+        <choose>
+            <when test="sort == 'name'">title ASC</when>
+            <when test="sort == 'date'">release_date DESC</when>
+            <when test="sort == 'views'">views DESC</when>
+            <when test="sort == 'likes'">likes DESC</when>
+        </choose>
     </select>
 
 </mapper>

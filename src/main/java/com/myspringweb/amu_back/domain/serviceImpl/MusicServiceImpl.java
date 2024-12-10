@@ -32,7 +32,9 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public List<MusicDTO> getAllMusic() {
-        return musicDAO.getAllMusic();
+        List<MusicDTO> list = musicDAO.getAllMusic();
+        System.out.println("Service - musicList: " + list);
+        return list;
     }
 
     @Override
@@ -73,6 +75,14 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public int isLikedMusic(FavoriteDTO favoriteDTO) {
         return musicDAO.isLikedMusic(favoriteDTO);
+    }
+
+    @Override
+    public String getImgPathByMusicCode(int musicCode) {
+        System.out.println("=== Service 이미지 경로 조회 ===");
+        System.out.println("조회할 musicCode: " + musicCode);
+        System.out.println("조회된 이미지 경로: " + musicDAO.getImgPathByMusicCode(musicCode));
+        return  musicDAO.getImgPathByMusicCode(musicCode);
     }
 
 
