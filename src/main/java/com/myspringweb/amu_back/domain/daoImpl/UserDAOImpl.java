@@ -21,4 +21,9 @@ public class UserDAOImpl implements UserDAO {
         return sqlSession.insert("user.signUp", userDTO);
     }
 
+    @Override
+    public int updateProfile(UserDTO userDTO) {
+        return sqlSession.update("user.updateProfile", userDTO);
+    }
+
 }

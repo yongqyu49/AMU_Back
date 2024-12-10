@@ -180,7 +180,7 @@ public class MusicController {
         String id = (String)
                 session.getAttribute("id");
         List<MusicDTO> musicList = musicService.getDefaultPlaylist(id);
-        System.out.println("음악 리스트: " + musicList);
+//        System.out.println("음악 리스트: " + musicList);
         return ResponseEntity.ok(musicList);
     }
 
