@@ -1,6 +1,7 @@
 package com.myspringweb.amu_back.domain.serviceImpl;
 
 import com.myspringweb.amu_back.domain.dao.UserDAO;
+import com.myspringweb.amu_back.domain.dto.MusicDTO;
 import com.myspringweb.amu_back.domain.dto.UserDTO;
 import com.myspringweb.amu_back.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +9,11 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
     private final UserDAO userDAO;
     private final PasswordEncoder passwordEncoder;
 
@@ -53,6 +55,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserById(String id) {
         return userDAO.getUserById(id);
+    }
+
+    @Override
+    public List<MusicDTO> getMyUploadList(String id) {
+        return userDAO.getMyUploadList(id);
     }
 
 

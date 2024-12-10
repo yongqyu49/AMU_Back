@@ -1,6 +1,9 @@
 package com.myspringweb.amu_back.domain.dao;
 
+import com.myspringweb.amu_back.domain.dto.MusicDTO;
 import com.myspringweb.amu_back.domain.dto.UserDTO;
+
+import java.util.List;
 
 public interface UserDAO {
     UserDTO getUserById(String id);
@@ -8,4 +11,6 @@ public interface UserDAO {
     int signUp(UserDTO userDTO);
 
     int updateProfile(UserDTO userDTO);
+
+    List<MusicDTO> getMyUploadList(String id);
 }

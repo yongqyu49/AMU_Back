@@ -1,5 +1,6 @@
 package com.myspringweb.amu_back.domain.controller;
 
+import com.myspringweb.amu_back.domain.dto.MusicDTO;
 import com.myspringweb.amu_back.domain.dto.UserDTO;
 import com.myspringweb.amu_back.domain.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -136,6 +138,12 @@ public class UserController {
         }
     }
 
-
+    @GetMapping("/myUpload")
+    public ResponseEntity<List<MusicDTO>> myUpload(HttpSession session) {
+        String id = (String) session.getAttribute("id");
+        if (id == null) return ResponseEntity.badRequest().body(null);
+        List<MusicDTO> musicList = userService.getMyUploadList(id);
+        return ResponseEntity.ok(musicList);
+    }
 
 }
