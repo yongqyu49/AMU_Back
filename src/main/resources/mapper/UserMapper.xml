@@ -29,5 +29,22 @@
         where id = #{id}
     </update>
 
+    <select id="getMyUploadList" parameterType="String" resultType="Music">
+        SELECT * FROM music WHERE id = #{id}
+    </select>
+
+    <select id="getMyLikeList" parameterType="String">
+        select * from music where music_code
+          in (select music_code from favorite where id = #{id} order by like_date desc)
+    </select>
+
+    <select id="getMyPlayList" parameterType="String">
+        select * from music where music_code
+          in (select music_code from playlist_music where playlist_code in (select playlist_code from playlist where id = #{id}));
+    </select>
+
+    <select id="getMyReviews" parameterType="String">
+        select * from music where music_code in (select music_code from review where id = #{id})
+    </select>
 
 </mapper>
