@@ -8,5 +8,8 @@ public class UserDTO {
     private String password;
     private String artist;
     private String role;
+    private String profileImg;
+
+    private String newId;
 }
 

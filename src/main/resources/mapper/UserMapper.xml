@@ -6,13 +6,28 @@
 <mapper namespace="user">
 
     <select id="getUserById" parameterType="string" resultType="User">
-        SELECT * FROM user WHERE id = #{id}
+        SELECT id, password, artist, role, profile_img profileImg  FROM user WHERE id = #{id}
     </select>
 
     <insert id="signUp" parameterType="User">
         insert into user(id, password, artist, role) VALUES (#{id}, #{password}, #{artist}, default)
     </insert>
 
+    <update id="updateProfile" parameterType="User">
+        update user
+        <set>
+            <if test="artist != null and artist != ''">
+                artist = #{artist},
+            </if>
+            <if test="profileImg != null and profileImg != ''">
+                profile_img = #{profileImg},
+            </if>
+            <if test="newId != null and newId != ''">
+                id = #{newId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 
 
 </mapper>

@@ -14,10 +14,12 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  file:
+    upload-dir: C:/AMU_asset/profile_img/
 
   web:
     resources:
-      static-locations: file:///C:/AMU_asset/AMU Img/
+      static-locations: file:///C:/AMU_asset/
 
 mybatis:
   config-location: classpath:configuration.xml
