@@ -28,4 +28,6 @@ public interface MusicDAO {
     int isLikedMusic(FavoriteDTO favoriteDTO);
 
     String getImgPathByMusicCode(int musicCode);
+
+    List<MusicDTO> getAllMusicSorted(String sortType);
 }

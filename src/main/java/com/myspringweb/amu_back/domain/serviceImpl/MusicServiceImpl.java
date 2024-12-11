@@ -85,5 +85,9 @@ public class MusicServiceImpl implements MusicService {
         return  musicDAO.getImgPathByMusicCode(musicCode);
     }
 
+    @Override
+    public List<MusicDTO> getAllMusicSorted(String sortType) {
+        return musicDAO.getAllMusicSorted(sortType);
+    }
 
 }
