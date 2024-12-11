@@ -58,7 +58,7 @@ public class MusicController {
             System.out.println("genre: " + genre);
             System.out.println("id: " + id);
             
-            String Mp3Path = uploadDir + "AMU_Mp3/" + filePath1;
+            String Mp3Path = uploadDir + "AMU Music/" + filePath1;
             String ImgPath = uploadDir + "AMU_Img/" + filePath2;
             System.out.println("음악 파일 경로: " + Mp3Path);
             System.out.println("이미지 파일 경로: " + ImgPath);
