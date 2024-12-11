@@ -14,4 +14,6 @@ public class ReviewDTO {
 
     private String id;
     private int musicCode;
+
+    private String profileImg;
 }

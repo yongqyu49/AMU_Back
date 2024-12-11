@@ -16,4 +16,5 @@ public class MusicDTO {
     private int views;
     private int genreCode;
     private String artist;
+    private String profileImg;
 }

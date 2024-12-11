@@ -90,4 +90,14 @@ public class MusicServiceImpl implements MusicService {
         return musicDAO.getAllMusicSorted(sortType);
     }
 
+    @Override
+    public List<ReviewDTO> getMusicReviewList(int musicCode) {
+        return musicDAO.getMusicReviewList(musicCode);
+    }
+
+    @Override
+    public int getMusicReviewCounts(int musicCode) {
+        return musicDAO.getMusicReviewCounts(musicCode);
+    }
+
 }
