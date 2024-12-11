@@ -30,4 +30,8 @@ public interface MusicDAO {
     String getImgPathByMusicCode(int musicCode);
 
     List<MusicDTO> getAllMusicSorted(String sortType);
+
+    List<ReviewDTO> getMusicReviewList(int musicCode);
+
+    int getMusicReviewCounts(int musicCode);
 }
