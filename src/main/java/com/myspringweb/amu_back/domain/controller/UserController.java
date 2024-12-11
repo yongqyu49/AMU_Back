@@ -61,8 +61,8 @@ public class UserController {
     // 세션 확인
     @GetMapping("/current")
     public ResponseEntity<UserDTO> getCurrentUser(HttpSession session) {
-        System.out.println("=== 현재 사용자 조회 ===");
-        System.out.println("세션 ID: " + session.getId());
+//        System.out.println("=== 현재 사용자 조회 ===");
+//        System.out.println("세션 ID: " + session.getId());
     
         String id = (String) session.getAttribute("id");
         String artist = (String) session.getAttribute("artist");
@@ -70,11 +70,11 @@ public class UserController {
         String profileImg = (String) session.getAttribute("profile_img");
 
         // 세션 정보 로깅
-        System.out.println("세션 정보:");
-        System.out.println("ID: " + id);
-        System.out.println("Artist: " + artist);
-        System.out.println("Role: " + role);
-        System.out.println("Profile Image: " + profileImg);
+//        System.out.println("세션 정보:");
+//        System.out.println("ID: " + id);
+//        System.out.println("Artist: " + artist);
+//        System.out.println("Role: " + role);
+//        System.out.println("Profile Image: " + profileImg);
 
 
         if (id != null && artist != null) {

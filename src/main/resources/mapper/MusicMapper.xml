@@ -15,8 +15,8 @@
     </select>
 
     <select id="getMusicById" resultType="Music">
-        SELECT music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist
-        FROM music WHERE music_code = #{id}
+        SELECT music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id artist, profile_img profileImg
+        FROM music m join user u on m.id = u.id WHERE music_code = #{id}
     </select>
 
     <select id="getReviewByMusicCode" parameterType="Integer" resultType="Review">
@@ -61,17 +61,17 @@
     <!-- 정렬 쿼리 -->
     <select id="getAllMusicSorted" parameterType="string" resultType="MusicDTO">
         SELECT
-            music_code musicCode, 
-            title, 
-            lyrics, 
-            release_date releaseDate, 
-            mp3_path mp3Path, 
-            img_path imgPath, 
-            file_size fileSize, 
-            runtime, 
-            views, 
-            genre_code genreCode, 
-            id artist 
+            music_code musicCode,
+            title,
+            lyrics,
+            release_date releaseDate,
+            mp3_path mp3Path,
+            img_path imgPath,
+            file_size fileSize,
+            runtime,
+            views,
+            genre_code genreCode,
+            id artist
         FROM music
         ORDER BY
         <choose>
@@ -81,6 +81,25 @@
             <when test="sortType == 'likes'">likes DESC</when>
             <otherwise>title</otherwise>
         </choose>
+    </select>
+
+    <select id="getMusicReviewList" parameterType="Integer" resultType="Review">
+        select
+            review_id reviewId,
+            review_contents reviewContents,
+            review_depth reviewDepth,
+            review_regdate reviewRegdate,
+            review_like reviewLike,
+            parent_id parentId,
+            r.id id,
+            music_code musicCode,
+            u.profile_img profileImg
+
+        from review r join user u on r.id = u.id where music_code = #{musicCode}
+    </select>
+
+    <select id="getMusicReviewCounts" parameterType="Integer" resultType="Integer">
+        select count(*) reviewCounts from review where music_code = #{musicCode}
     </select>
 
 </mapper>

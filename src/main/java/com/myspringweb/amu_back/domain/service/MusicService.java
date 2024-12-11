@@ -30,4 +30,8 @@ public interface MusicService {
     String getImgPathByMusicCode(int musicCode);
     
     List<MusicDTO> getAllMusicSorted(String sortType);
+
+    List<ReviewDTO> getMusicReviewList(int i);
+
+    int getMusicReviewCounts(int musicCode);
 }
