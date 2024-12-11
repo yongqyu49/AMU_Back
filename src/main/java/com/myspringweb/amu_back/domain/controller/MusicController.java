@@ -268,4 +268,12 @@ public class MusicController {
         return ResponseEntity.ok(reviewCounts);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<MusicDTO>> searchMusic(@RequestParam("query") String query) {
+        System.out.println("검색어: " + query);
+        List<MusicDTO> results = musicService.searchMusic(query);
+        System.out.println("검색 결과: " + results);
+        return ResponseEntity.ok(results);
+    }
+
 }

@@ -34,4 +34,6 @@ public interface MusicDAO {
     List<ReviewDTO> getMusicReviewList(int musicCode);
 
     int getMusicReviewCounts(int musicCode);
+
+    List<MusicDTO> searchMusic(String query);
 }
