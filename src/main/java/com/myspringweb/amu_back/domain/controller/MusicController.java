@@ -194,8 +194,7 @@ public class MusicController {
 
     @GetMapping("/getPlaylist")
     public ResponseEntity<List<MusicDTO>> getPlaylist(HttpSession session) {
-        String id = (String)
-                session.getAttribute("id");
+        String id = (String)session.getAttribute("id");
         List<MusicDTO> musicList = musicService.getDefaultPlaylist(id);
 //        System.out.println("음악 리스트: " + musicList);
         return ResponseEntity.ok(musicList);
@@ -246,6 +245,13 @@ public class MusicController {
                 return ResponseEntity.badRequest().body("안 좋아요 실패");
             }
         }
+    }
+
+    @GetMapping("/{musicCode}")
+    public ResponseEntity<MusicDTO> musicDetail(@PathVariable String musicCode, HttpSession session) {
+        String id = (String) session.getAttribute("id");
+        MusicDTO musicDetail = musicService.getMusicById(Integer.parseInt(musicCode));
+        return ResponseEntity.ok(musicDetail);
     }
 
 }

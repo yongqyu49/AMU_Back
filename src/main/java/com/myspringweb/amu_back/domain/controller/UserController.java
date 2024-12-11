@@ -1,6 +1,7 @@
 package com.myspringweb.amu_back.domain.controller;
 
 import com.myspringweb.amu_back.domain.dto.MusicDTO;
+import com.myspringweb.amu_back.domain.dto.PlaylistDTO;
 import com.myspringweb.amu_back.domain.dto.ReviewDTO;
 import com.myspringweb.amu_back.domain.dto.UserDTO;
 import com.myspringweb.amu_back.domain.service.UserService;
@@ -170,6 +171,13 @@ public class UserController {
         String id = (String) session.getAttribute("id");
         List<ReviewDTO> reviewList = userService.getMyReviewList(id);
         return ResponseEntity.ok(reviewList);
+    }
+
+    @GetMapping("/myPlaylist")
+    public ResponseEntity<List<PlaylistDTO>> myPlaylist(HttpSession session) {
+        String id = (String) session.getAttribute("id");
+        List<PlaylistDTO> playlistList = userService.getMyPlaylistList(id);
+        return ResponseEntity.ok(playlistList);
     }
 
 }

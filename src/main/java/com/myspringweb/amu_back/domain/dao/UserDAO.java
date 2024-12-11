@@ -1,6 +1,7 @@
 package com.myspringweb.amu_back.domain.dao;
 
 import com.myspringweb.amu_back.domain.dto.MusicDTO;
+import com.myspringweb.amu_back.domain.dto.PlaylistDTO;
 import com.myspringweb.amu_back.domain.dto.ReviewDTO;
 import com.myspringweb.amu_back.domain.dto.UserDTO;
 
@@ -18,4 +19,6 @@ public interface UserDAO {
     List<MusicDTO> getMyFavoriteList(String id);
 
     List<ReviewDTO> getMyReviewList(String id);
+
+    List<PlaylistDTO> getMyPlaylistList(String id);
 }

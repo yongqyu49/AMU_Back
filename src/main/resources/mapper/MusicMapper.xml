@@ -15,7 +15,8 @@
     </select>
 
     <select id="getMusicById" resultType="Music">
-        SELECT * FROM music WHERE music_code = #{id}
+        SELECT music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist
+        FROM music WHERE music_code = #{id}
     </select>
 
     <select id="getReviewByMusicCode" parameterType="Integer" resultType="Review">

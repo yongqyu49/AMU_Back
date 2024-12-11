@@ -2,6 +2,7 @@ package com.myspringweb.amu_back.domain.daoImpl;
 
 import com.myspringweb.amu_back.domain.dao.UserDAO;
 import com.myspringweb.amu_back.domain.dto.MusicDTO;
+import com.myspringweb.amu_back.domain.dto.PlaylistDTO;
 import com.myspringweb.amu_back.domain.dto.ReviewDTO;
 import com.myspringweb.amu_back.domain.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,11 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<ReviewDTO> getMyReviewList(String id) {
         return sqlSession.selectList("user.getMyReviewList", id);
+    }
+
+    @Override
+    public List<PlaylistDTO> getMyPlaylistList(String id) {
+        return sqlSession.selectList("user.getMyPlaylistList", id);
     }
 
 }
