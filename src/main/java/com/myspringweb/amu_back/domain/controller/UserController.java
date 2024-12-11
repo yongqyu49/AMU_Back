@@ -180,4 +180,15 @@ public class UserController {
         return ResponseEntity.ok(playlistList);
     }
 
+    @GetMapping("/{artist}")
+    public ResponseEntity<UserDTO> getUserProfile(@PathVariable String artist) {
+        String id = artist;
+        if(id != null) {
+            UserDTO userDTO = userService.getUserById(id);
+            return ResponseEntity.ok(userDTO);
+        } else {
+            return ResponseEntity.status(401).body(null);
+        }
+    }
+
 }
