@@ -100,4 +100,9 @@ public class MusicServiceImpl implements MusicService {
         return musicDAO.getMusicReviewCounts(musicCode);
     }
 
+    @Override
+    public List<MusicDTO> searchMusic(String query) {
+        return musicDAO.searchMusic(query);
+    }
+
 }
