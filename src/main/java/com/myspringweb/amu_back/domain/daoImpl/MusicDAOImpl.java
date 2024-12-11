@@ -79,5 +79,15 @@ public class MusicDAOImpl implements MusicDAO {
     public List<MusicDTO> getAllMusicSorted(String sortType) {
         return sqlSession.selectList("music.getAllMusicSorted", sortType);
     }
+
+    @Override
+    public List<ReviewDTO> getMusicReviewList(int musicCode) {
+        return sqlSession.selectList("music.getMusicReviewList", musicCode);
+    }
+
+    @Override
+    public int getMusicReviewCounts(int musicCode) {
+        return sqlSession.selectOne("music.getMusicReviewCounts", musicCode);
+    }
 }
 

@@ -251,7 +251,21 @@ public class MusicController {
     public ResponseEntity<MusicDTO> musicDetail(@PathVariable String musicCode, HttpSession session) {
         String id = (String) session.getAttribute("id");
         MusicDTO musicDetail = musicService.getMusicById(Integer.parseInt(musicCode));
+        System.out.println("musicDetail" + musicDetail);
         return ResponseEntity.ok(musicDetail);
+    }
+
+    @GetMapping("/{musicCode}/comments")
+    public ResponseEntity<List<ReviewDTO>> musicDetailComment(@PathVariable String musicCode, HttpSession session) {
+        List<ReviewDTO> reivewList = musicService.getMusicReviewList(Integer.parseInt(musicCode));
+        System.out.println("reivewList" + reivewList);
+        return ResponseEntity.ok(reivewList);
+    }
+
+    @GetMapping("/{musicCode}/commentCounts")
+    public ResponseEntity<Integer> musicDetailCommentCounts(@PathVariable String musicCode, HttpSession session) {
+        int reviewCounts = musicService.getMusicReviewCounts(Integer.parseInt(musicCode));
+        return ResponseEntity.ok(reviewCounts);
     }
 
 }
