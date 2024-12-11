@@ -40,15 +40,13 @@
           in (select music_code from favorite where id = #{id} order by like_date desc)
     </select>
 
-    <select id="getMyPlayList" parameterType="String">
-        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist
-        from music where music_code
-          in (select music_code from playlist_music where playlist_code in (select playlist_code from playlist where id = #{id}));
+    <select id="getMyPlaylistList" parameterType="String" resultType="Playlist">
+        select * from playlist where id = #{id}
     </select>
 
     <select id="getMyReviewList" parameterType="String" resultType="Review">
-        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist
-        from music where music_code in (select music_code from review where id = #{id})
+        select review_id reviewId, review_contents reviewContents, review_depth reviewDepth, review_regdate reviewRegdate, review_like reviewLike, parent_id parentId, id, music_code musicCode
+        from review where id = #{id} and music_code in (select music_code from music)
     </select>
 
 </mapper>

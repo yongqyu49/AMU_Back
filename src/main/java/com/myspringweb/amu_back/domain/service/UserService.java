@@ -1,6 +1,7 @@
 package com.myspringweb.amu_back.domain.service;
 
 import com.myspringweb.amu_back.domain.dto.MusicDTO;
+import com.myspringweb.amu_back.domain.dto.PlaylistDTO;
 import com.myspringweb.amu_back.domain.dto.ReviewDTO;
 import com.myspringweb.amu_back.domain.dto.UserDTO;
 
@@ -20,4 +21,6 @@ public interface UserService {
     List<MusicDTO> getMyFavoriteList(String id);
 
     List<ReviewDTO> getMyReviewList(String id);
+
+    List<PlaylistDTO> getMyPlaylistList(String id);
 }

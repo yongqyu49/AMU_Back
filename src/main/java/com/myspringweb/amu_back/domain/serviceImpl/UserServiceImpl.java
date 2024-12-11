@@ -2,6 +2,7 @@ package com.myspringweb.amu_back.domain.serviceImpl;
 
 import com.myspringweb.amu_back.domain.dao.UserDAO;
 import com.myspringweb.amu_back.domain.dto.MusicDTO;
+import com.myspringweb.amu_back.domain.dto.PlaylistDTO;
 import com.myspringweb.amu_back.domain.dto.ReviewDTO;
 import com.myspringweb.amu_back.domain.dto.UserDTO;
 import com.myspringweb.amu_back.domain.service.UserService;
@@ -73,5 +74,9 @@ public class UserServiceImpl implements UserService {
         return userDAO.getMyReviewList(id);
     }
 
+    @Override
+    public List<PlaylistDTO> getMyPlaylistList(String id) {
+        return userDAO.getMyPlaylistList(id);
+    }
 
 }
