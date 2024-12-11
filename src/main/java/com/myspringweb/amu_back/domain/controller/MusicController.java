@@ -12,6 +12,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.MediaType;
+
 
 import java.sql.Timestamp;
 
@@ -25,6 +29,8 @@ import java.util.List;
 public class MusicController {
     private final MusicService musicService;
     // private final Path audioDirectory = Paths.get("C:\\AMU Music");
+    @Value("${spring.web.resources.static-locations}")
+    private String uploadDir;
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadMusic(
@@ -33,8 +39,8 @@ public class MusicController {
             @RequestParam("filePath1") String filePath1,
             @RequestParam("filePath2") String filePath2,
             @RequestParam("fileSize") String fileSize,
-            @RequestParam("fileMp3") MultipartFile fileMp3,
-            @RequestParam("fileImg") MultipartFile fileImg,
+//            @RequestParam("fileMp3") MultipartFile fileMp3,
+//            @RequestParam("fileImg") MultipartFile fileImg,
             @RequestParam("playTime") String playTime,
             @RequestParam("genre") Integer genre,
             HttpSession session) {
@@ -52,12 +58,16 @@ public class MusicController {
             System.out.println("genre: " + genre);
             System.out.println("id: " + id);
             
-            
+            String Mp3Path = uploadDir + "AMU_Mp3/" + filePath1;
+            String ImgPath = uploadDir + "AMU_Img/" + filePath2;
+            System.out.println("음악 파일 경로: " + Mp3Path);
+            System.out.println("이미지 파일 경로: " + ImgPath);
+
             MusicDTO musicDTO = new MusicDTO();
             musicDTO.setTitle(title);
             musicDTO.setLyrics(lyrics);
-            musicDTO.setMp3Path(filePath1);
-            musicDTO.setImgPath(filePath2);
+            musicDTO.setMp3Path(Mp3Path);
+            musicDTO.setImgPath(ImgPath);
             musicDTO.setFileSize(Long.parseLong(fileSize));
             musicDTO.setRuntime(Integer.parseInt(playTime));
             musicDTO.setGenreCode(genre);
@@ -88,36 +98,43 @@ public class MusicController {
 
     //이미지 조회
     @GetMapping("/getMusic/image/{musicCode}")
-    public ResponseEntity<Resource> getImgPathByMusicCode(@PathVariable int musicCode) throws Exception {
-        String music = musicService.getImgPathByMusicCode(musicCode);
+    public ResponseEntity<Resource> showImage(@PathVariable int musicCode) throws Exception {
+        String ImagePath = musicService.getImgPathByMusicCode(musicCode);
 
         System.out.println("musicCode: " + musicCode);
-        System.out.println("원본 이미지 경로: " + music);
+        System.out.println("원본 이미지 경로: " + ImagePath);
 
-        Path imagePath = Paths.get(music).normalize(); //java.nio.file 사용 //경로생성, 정규화
-        System.out.println("변환된 이미지 경로: " + imagePath.toString());
-        System.out.println("절대 경로: " + imagePath.toAbsolutePath());
+        String realPath = ImagePath.replace("file:///", "");
 
-        Resource resource = new UrlResource(imagePath.toUri());
-        System.out.println("리소스 URI: " + resource.getURI());
 
+        // Path imagePath = Paths.get(music).normalize(); //java.nio.file 사용 //경로생성, 정규화
+        // System.out.println("변환된 이미지 경로: " + imagePath.toString());
+        // System.out.println("절대 경로: " + imagePath.toAbsolutePath());
+
+        // Resource resource = new UrlResource(imagePath.toUri());
+        // System.out.println("리소스 URI: " + resource.getURI());
+
+        Resource resource = new FileSystemResource(realPath);
         // 파일이 존재하는지 확인
         if (resource.exists() && resource.isReadable()) {
             System.out.println("파일 존재 확인 성공");
+
             return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                // .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                .contentType(MediaType.IMAGE_PNG)
                 .body(resource);
         } else {
-            System.out.println("파일을 찾을 수 없음: " + imagePath);
+            System.out.println("파일을 찾을 수 없음: " + realPath);
             return ResponseEntity.notFound().build();
         }
     }
 
-//    @GetMapping("/sort/{sortType}")
-//    public ResponseEntity<List<MusicDTO>> getMusicSort(@PathVariable String sortType) {
-//        List<MusicDTO> musicList = musicService.getAllMusicSorted(sortType);
-//        return ResponseEntity.ok(musicList);
-//    }
+   @GetMapping("/sort/{sortType}")
+   public ResponseEntity<List<MusicDTO>> getMusicSort(@PathVariable String sortType) {
+       System.out.println("sortType: " + sortType);
+       List<MusicDTO> musicList = musicService.getAllMusicSorted(sortType);
+       return ResponseEntity.ok(musicList);
+   }
 
     // 음악 목록 조회
     @PostMapping("/list")

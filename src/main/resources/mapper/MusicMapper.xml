@@ -59,29 +59,27 @@
     </select>
 
     <!-- 정렬 쿼리 -->
-    <select id="orderByTitle"  resultType="Music">
-        SELECT * FROM music
-        ORDER BY title ASC
-    </select>
-
-    <select id="orderByDate"  resultType="Music">
-        SELECT * FROM music
-        ORDER BY release_date DESC
-    </select>
-
-    <select id="orderByViews"  resultType="Music">
-        SELECT * FROM music
-        ORDER BY views DESC
-    </select>
-
-    <select id="allOrderBy" parameterType="String" resultType="Music">
-        SELECT * FROM music
+    <select id="getAllMusicSorted" parameterType="string" resultType="MusicDTO">
+        SELECT
+            music_code musicCode, 
+            title, 
+            lyrics, 
+            release_date releaseDate, 
+            mp3_path mp3Path, 
+            img_path imgPath, 
+            file_size fileSize, 
+            runtime, 
+            views, 
+            genre_code genreCode, 
+            id artist 
+        FROM music
         ORDER BY
         <choose>
-            <when test="sort == 'name'">title ASC</when>
-            <when test="sort == 'date'">release_date DESC</when>
-            <when test="sort == 'views'">views DESC</when>
-            <when test="sort == 'likes'">likes DESC</when>
+            <when test="sortType == 'name'">title ASC</when>
+            <when test="sortType == 'date'">release_date DESC</when>
+            <when test="sortType == 'views'">views DESC</when>
+            <when test="sortType == 'likes'">likes DESC</when>
+            <otherwise>title</otherwise>
         </choose>
     </select>
 

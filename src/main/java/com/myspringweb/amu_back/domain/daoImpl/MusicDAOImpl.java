@@ -74,5 +74,10 @@ public class MusicDAOImpl implements MusicDAO {
         System.out.println("조회된 이미지 경로: " + sqlSession.selectOne("music.getImgPathByMusicCode", musicCode));
         return sqlSession.selectOne("music.getImgPathByMusicCode", musicCode);
     }
+
+    @Override
+    public List<MusicDTO> getAllMusicSorted(String sortType) {
+        return sqlSession.selectList("music.getAllMusicSorted", sortType);
+    }
 }
 
