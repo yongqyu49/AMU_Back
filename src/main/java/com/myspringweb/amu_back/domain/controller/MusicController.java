@@ -158,6 +158,19 @@ public class MusicController {
    }
 
 //   @PostMapping()
+    
+    //조회수 추가
+    @PostMapping("/view")
+    public ResponseEntity<String> addViews(@RequestParam int musicCode) {
+        System.out.println("addViews 호출");
+        int result = musicService.updateViews(musicCode);
+        System.out.println("musicCode for Views: " + musicCode);
+        if(result == 1) {
+            return ResponseEntity.ok("조회수 추가 성공");
+        }else{
+            return ResponseEntity.badRequest().body("조회수 추가 실패");
+        }
+    }
 
     // 음악 목록 조회
     @PostMapping("/list")
