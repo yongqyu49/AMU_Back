@@ -38,4 +38,6 @@ public interface MusicService {
     int updateViews(int musicCode);
 
     int deleteMusic(int musicCode);
+
+    List<MusicDTO> getShowGenre(int genreCode);
 }

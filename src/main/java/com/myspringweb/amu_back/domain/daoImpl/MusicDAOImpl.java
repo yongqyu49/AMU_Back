@@ -99,5 +99,10 @@ public class MusicDAOImpl implements MusicDAO {
     public int deleteMusic(int musicCode) {
         return sqlSession.delete("music.deleteMusic", musicCode);
     }
+
+    @Override
+    public List<MusicDTO> getShowGenre(int genreCode) {
+        return sqlSession.selectList("music.getShowGenre", genreCode);
+    }
 }
 

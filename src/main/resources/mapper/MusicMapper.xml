@@ -115,4 +115,23 @@
         WHERE title LIKE CONCAT('%', #{query}, '%') OR u.artist LIKE CONCAT('%', #{query}, '%')
     </select>
 
+    <!-- 장르별 내 업로드 목록 조회 -->
+    <select id="getShowGenre" parameterType="Integer" resultType="MusicDTO">
+        SELECT music_code musicCode, 
+               title, 
+               lyrics, 
+               release_date releaseDate, 
+               mp3_path mp3Path, 
+               img_path imgPath, 
+               file_size fileSize, 
+               runtime, 
+               views, 
+               genre_code genreCode, 
+               m.id id, 
+               u.artist artist
+        FROM music m 
+        JOIN user u ON m.id = u.id 
+        WHERE genre_code = #{genreCode}
+    </select>
+
 </mapper>

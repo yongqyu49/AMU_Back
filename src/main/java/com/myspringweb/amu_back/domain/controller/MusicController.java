@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
-
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
 
@@ -29,7 +29,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/music")
 public class MusicController {
-    private final MusicService musicService;
+    @Autowired
+    private MusicService musicService;
     // private final Path audioDirectory = Paths.get("C:\\AMU Music");
     @Value("${spring.web.resources.static-locations}")
     private String uploadDir;
@@ -112,7 +113,7 @@ public class MusicController {
         } catch (Exception e) {
             System.out.println("=== 에러 발생 지점 확인 ===");
             System.out.println("에러 클래스: " + e.getClass().getName());
-            System.out.println("에러 메시지: " + e.getMessage());
+            System.out.println("���러 메시지: " + e.getMessage());
             return ResponseEntity.internalServerError().body("서버 오류: " + e.getMessage());
         }        
     }
@@ -148,6 +149,18 @@ public class MusicController {
        System.out.println("sortType: " + sortType);
        List<MusicDTO> musicList = musicService.getAllMusicSorted(sortType);
        return ResponseEntity.ok(musicList);
+   }
+
+   @GetMapping("/genre/{genreCode}")
+   public List<MusicDTO> getShowGenre(@PathVariable int genreCode) {
+       System.out.println("장르 선별 요청: " + genreCode);
+       if(genreCode == 0) {
+           return musicService.getAllMusic();
+       } else {
+           List<MusicDTO> result = musicService.getShowGenre(genreCode);
+           System.out.println("조회된 음악 수: " + result.size());
+           return result;
+       }
    }
 
 //   @PostMapping()
