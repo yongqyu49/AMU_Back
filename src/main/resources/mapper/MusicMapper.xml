@@ -5,6 +5,10 @@
 
 <mapper namespace="music">
 
+    <delete id="deleteMusic" parameterType="Integer">
+        DELETE FROM music WHERE music_code = #{musicCode}
+    </delete>
+
     <update id="updateViews" parameterType="Integer">
         UPDATE Music
         SET views = views + 1
@@ -22,12 +26,13 @@
     </select>
 
     <select id="getMusicById" resultType="Music">
-        SELECT music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id id, u.artist artist, profile_img profileImg
+        SELECT music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id id, u.artist artist, u.profile_img profileImg
         FROM music m join user u on m.id = u.id WHERE music_code = #{id}
     </select>
 
     <select id="getReviewByMusicCode" parameterType="Integer" resultType="Review">
-        select review_id reviewId, review_contents reviewContents, review_depth reviewDepth, review_regdate reviewRegdate, review_like reviewLike, parent_id parentId, id, music_code musicCode from review where music_code = #{music_code} order by review_regdate desc;
+        select review_id reviewId, review_contents reviewContents, review_depth reviewDepth, review_regdate reviewRegdate, review_like reviewLike, parent_id parentId, id, music_code musicCode
+        from review where music_code = #{music_code} order by review_regdate desc;
     </select>
 
     <insert id="uploadReview" parameterType="Review">
@@ -37,7 +42,8 @@
 
     <select id="getAllMusicLatest" resultType="Music">
         select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id id, u.artist artist
-        from music m join user u on m.id = u.id order by release_date desc
+        FROM music m join user u on m.id = u.id
+        order by release_date desc
     </select>
 
     <insert id="likeMusic" parameterType="Favorite">
@@ -71,8 +77,9 @@
             runtime,
             views,
             genre_code genreCode,
-            id artist
-        FROM music
+            m.id id,
+            u.artist artist
+        FROM music m join user u on m.id = u.id
         ORDER BY
         <choose>
             <when test="sortType == 'name'">title ASC</when>

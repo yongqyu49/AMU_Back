@@ -94,5 +94,10 @@ public class MusicDAOImpl implements MusicDAO {
     public int updateViews(int musicCode) {
         return sqlSession.update("music.updateViews", musicCode);
     }
+
+    @Override
+    public int deleteMusic(int musicCode) {
+        return sqlSession.delete("music.deleteMusic", musicCode);
+    }
 }
 

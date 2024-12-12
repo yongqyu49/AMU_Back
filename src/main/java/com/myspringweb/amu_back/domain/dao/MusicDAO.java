@@ -36,4 +36,6 @@ public interface MusicDAO {
     List<MusicDTO> searchMusic(String query);
 
     int updateViews(int musicCode);
+
+    int deleteMusic(int musicCode);
 }
