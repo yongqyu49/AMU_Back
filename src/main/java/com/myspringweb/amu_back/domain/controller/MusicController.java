@@ -128,13 +128,6 @@ public class MusicController {
         String realPath = ImagePath.replace("file:///", "");
 
 
-        // Path imagePath = Paths.get(music).normalize(); //java.nio.file 사용 //경로생성, 정규화
-        // System.out.println("변환된 이미지 경로: " + imagePath.toString());
-        // System.out.println("절대 경로: " + imagePath.toAbsolutePath());
-
-        // Resource resource = new UrlResource(imagePath.toUri());
-        // System.out.println("리소스 URI: " + resource.getURI());
-
         Resource resource = new FileSystemResource(realPath);
         // 파일이 존재하는지 확인
         if (resource.exists() && resource.isReadable()) {
