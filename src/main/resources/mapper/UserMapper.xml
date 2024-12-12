@@ -6,7 +6,8 @@
 <mapper namespace="user">
 
     <select id="getUserById" parameterType="string" resultType="User">
-        SELECT id, password, artist, role, profile_img profileImg  FROM user WHERE id = #{id}
+        SELECT id, password, artist, role, profile_img profileImg
+        FROM user WHERE id = #{id}
     </select>
 
     <insert id="signUp" parameterType="User">

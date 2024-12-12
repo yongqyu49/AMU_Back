@@ -88,7 +88,7 @@ public class MusicController {
             musicDTO.setImgPath("AMU_Img/" + imgFileName);
 
             // 음악 파일 저장
-            String mp3FileName = UUID.randomUUID().toString() + "_" + fileMp3.getOriginalFilename();
+            String mp3FileName = fileMp3.getOriginalFilename();
             String mp3Path = "C:/AMU_asset/AMU Music/" + mp3FileName;
             fileMp3.transferTo(new File(mp3Path));
 
