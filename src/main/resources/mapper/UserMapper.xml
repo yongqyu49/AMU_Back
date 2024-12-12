@@ -40,10 +40,11 @@
     </select>
 
     <select id="getMyFavoriteList" parameterType="String" resultType="Music">
-        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id id, u.artist artist
-        from music m join user u on m.id = u.id
-        where music_code
-                  in (select music_code from favorite where u.id = #{id} order by like_date desc)
+        select m.music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id id, u.artist artist
+        from music m
+                 join user u on m.id = u.id
+                 join favorite f on m.music_code = f.music_code
+        where f.id = #{id} order by like_date desc
     </select>
 
     <select id="getMyPlaylistList" parameterType="String" resultType="Playlist">
@@ -51,8 +52,11 @@
     </select>
 
     <select id="getMyReviewList" parameterType="String" resultType="Review">
-        select review_id reviewId, review_contents reviewContents, review_depth reviewDepth, review_regdate reviewRegdate, review_like reviewLike, parent_id parentId, id, music_code musicCode
-        from review where id = #{id} and music_code in (select music_code from music)
+        select review_id reviewId, review_contents reviewContents, review_depth reviewDepth, review_regdate reviewRegdate, review_like reviewLike, parent_id parentId, m.id id, u.artist artist, r.music_code musicCode, m.img_path imgPath, m.title title
+        from review r
+                 join music m on r.music_code = m.music_code
+                 join user u on u.id = m.id
+        where r.id = #{id} order by review_regdate desc
     </select>
 
 </mapper>
