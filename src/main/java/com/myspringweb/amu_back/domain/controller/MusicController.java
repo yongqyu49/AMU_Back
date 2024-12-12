@@ -192,14 +192,6 @@ public class MusicController {
         }
     }
 
-    @GetMapping("/getPlaylist")
-    public ResponseEntity<List<MusicDTO>> getPlaylist(HttpSession session) {
-        String id = (String)session.getAttribute("id");
-        List<MusicDTO> musicList = musicService.getDefaultPlaylist(id);
-//        System.out.println("음악 리스트: " + musicList);
-        return ResponseEntity.ok(musicList);
-    }
-
     @GetMapping("/isLiked/{musicCode}")
     public ResponseEntity<Boolean> isLikedMusic(@PathVariable int musicCode, HttpSession session) {
         String id = (String) session.getAttribute("id");

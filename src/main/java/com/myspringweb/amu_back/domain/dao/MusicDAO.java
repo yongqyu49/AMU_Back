@@ -19,8 +19,6 @@ public interface MusicDAO {
 
     List<MusicDTO> getAllMusicLatest();
 
-    List<MusicDTO> getDefaultPlayList(String id);
-
     int likeMusic(FavoriteDTO favoriteDTO);
 
     int unlikeMusic(FavoriteDTO favoriteDTO);

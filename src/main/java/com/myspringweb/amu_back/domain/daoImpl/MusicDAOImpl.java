@@ -48,11 +48,6 @@ public class MusicDAOImpl implements MusicDAO {
     }
 
     @Override
-    public List<MusicDTO> getDefaultPlayList(String id) {
-        return sqlSession.selectList("music.getDefaultPlayList", id);
-    }
-
-    @Override
     public int likeMusic(FavoriteDTO favoriteDTO) {
         return sqlSession.insert("music.likeMusic", favoriteDTO);
     }
