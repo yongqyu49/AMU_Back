@@ -5,6 +5,10 @@
 
 <mapper namespace="music">
 
+    <delete id="deleteMusic" parameterType="Integer">
+        DELETE FROM music WHERE music_code = #{musicCode}
+    </delete>
+
     <update id="updateViews" parameterType="Integer">
         UPDATE Music
         SET views = views + 1

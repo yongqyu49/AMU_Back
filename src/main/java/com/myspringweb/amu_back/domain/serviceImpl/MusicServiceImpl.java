@@ -105,4 +105,8 @@ public class MusicServiceImpl implements MusicService {
         return musicDAO.updateViews(musicCode);
     }
 
+    @Override
+    public int deleteMusic(int musicCode) {
+        return musicDAO.deleteMusic(musicCode);
+    }
 }

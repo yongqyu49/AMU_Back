@@ -151,6 +151,18 @@ public class MusicController {
    }
 
 //   @PostMapping()
+
+    //음악 삭제
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteMusic(@RequestParam int musicCode) {
+        System.out.println("deleteMusic 호출");
+        int result = musicService.deleteMusic(musicCode);
+        if(result == 1) {
+            return ResponseEntity.ok("음악 삭제 성공");
+        }else{
+            return ResponseEntity.badRequest().body("음악 삭제 실패");
+        }
+    }
     
     //조회수 추가
     @PostMapping("/view")
