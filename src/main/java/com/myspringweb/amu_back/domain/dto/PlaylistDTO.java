@@ -10,6 +10,7 @@ public class PlaylistDTO {
     private String playlistName;
     private String id;
     private int musicCode;
+    private Timestamp regTime;
     private Timestamp playlistDate;
 }
 
