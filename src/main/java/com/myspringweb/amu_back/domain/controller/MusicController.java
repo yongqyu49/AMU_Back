@@ -128,13 +128,6 @@ public class MusicController {
         String realPath = ImagePath.replace("file:///", "");
 
 
-        // Path imagePath = Paths.get(music).normalize(); //java.nio.file 사용 //경로생성, 정규화
-        // System.out.println("변환된 이미지 경로: " + imagePath.toString());
-        // System.out.println("절대 경로: " + imagePath.toAbsolutePath());
-
-        // Resource resource = new UrlResource(imagePath.toUri());
-        // System.out.println("리소스 URI: " + resource.getURI());
-
         Resource resource = new FileSystemResource(realPath);
         // 파일이 존재하는지 확인
         if (resource.exists() && resource.isReadable()) {
@@ -158,6 +151,19 @@ public class MusicController {
    }
 
 //   @PostMapping()
+    
+    //조회수 추가
+    @PostMapping("/view")
+    public ResponseEntity<String> addViews(@RequestParam int musicCode) {
+        System.out.println("addViews 호출");
+        int result = musicService.updateViews(musicCode);
+        System.out.println("musicCode for Views: " + musicCode);
+        if(result == 1) {
+            return ResponseEntity.ok("조회수 추가 성공");
+        }else{
+            return ResponseEntity.badRequest().body("조회수 추가 실패");
+        }
+    }
 
     // 음악 목록 조회
     @PostMapping("/list")
