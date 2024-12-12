@@ -8,6 +8,7 @@ import com.myspringweb.amu_back.domain.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,9 +22,15 @@ public class UserDAOImpl implements UserDAO {
         return sqlSession.selectOne("user.getUserById", id);
     }
 
-    @Override
+    @Transactional // 트랜잭션 적용
     public int signUp(UserDTO userDTO) {
-        return sqlSession.insert("user.signUp", userDTO);
+        try {
+            sqlSession.insert("user.signUp", userDTO);
+            sqlSession.insert("user.insertPlaylist", userDTO);
+            return 1;
+        } catch (Exception e) {
+            throw new RuntimeException("회원가입 중 오류 발생", e); // 강제 롤백
+        }
     }
 
     @Override

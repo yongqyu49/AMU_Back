@@ -19,8 +19,6 @@ public interface MusicService {
 
     List<MusicDTO> getAllMusicLatest();
 
-    List<MusicDTO> getDefaultPlaylist(String id);
-
     int likeMusic(FavoriteDTO favoriteDTO);
 
     int unlikeMusic(FavoriteDTO favoriteDTO);
