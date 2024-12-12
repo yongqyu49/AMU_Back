@@ -12,8 +12,8 @@
     </select>
 
     <insert id="addMusicToPlaylist" parameterType="Playlist">
-         insert into playlist_music (music_code, playlist_code)
-         values (#{musicCode}, #{playlistCode})
+         insert into playlist_music (music_code, playlist_code, reg_time)
+         values (#{musicCode}, #{playlistCode}, current_timestamp)
     </insert>
 
     <select id="getDefaultPlaylistMusic" parameterType="String" resultType="Music">

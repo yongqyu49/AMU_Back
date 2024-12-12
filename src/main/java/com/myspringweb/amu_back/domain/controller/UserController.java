@@ -55,7 +55,7 @@ public class UserController {
         session.setAttribute("artist", user.getArtist());
         session.setAttribute("role", user.getRole());
         session.setAttribute("profile_img", user.getProfileImg());
-        return ResponseEntity.ok("로그인 성공");
+        return ResponseEntity.ok(user.getId());
     }
 
     // 세션 확인
