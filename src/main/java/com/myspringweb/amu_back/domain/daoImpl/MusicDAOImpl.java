@@ -48,11 +48,6 @@ public class MusicDAOImpl implements MusicDAO {
     }
 
     @Override
-    public List<MusicDTO> getDefaultPlayList(String id) {
-        return sqlSession.selectList("music.getDefaultPlayList", id);
-    }
-
-    @Override
     public int likeMusic(FavoriteDTO favoriteDTO) {
         return sqlSession.insert("music.likeMusic", favoriteDTO);
     }
@@ -88,6 +83,11 @@ public class MusicDAOImpl implements MusicDAO {
     @Override
     public int getMusicReviewCounts(int musicCode) {
         return sqlSession.selectOne("music.getMusicReviewCounts", musicCode);
+    }
+
+    @Override
+    public List<MusicDTO> searchMusic(String query) {
+        return sqlSession.selectList("music.searchMusic", query);
     }
 }
 

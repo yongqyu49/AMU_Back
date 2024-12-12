@@ -18,13 +18,13 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public boolean uploadMusic(MusicDTO musicDTO){
         try {
-            System.out.println("=== Service 레벨 시작 ===");
+//            System.out.println("=== Service 레벨 시작 ===");
             int result = musicDAO.uploadMusic(musicDTO);
-            System.out.println("DAO 결과: " + result);
+//            System.out.println("DAO 결과: " + result);
             return result > 0;
         } catch (Exception e) {
-            System.out.println("=== Service 레벨 에러 ===");
-            System.out.println("에러 메시지: " + e.getMessage()); 
+//            System.out.println("=== Service 레벨 에러 ===");
+//            System.out.println("에러 메시지: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -33,7 +33,7 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public List<MusicDTO> getAllMusic() {
         List<MusicDTO> list = musicDAO.getAllMusic();
-        System.out.println("Service - musicList: " + list);
+//        System.out.println("Service - musicList: " + list);
         return list;
     }
 
@@ -55,11 +55,6 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public List<MusicDTO> getAllMusicLatest() {
         return musicDAO.getAllMusicLatest();
-    }
-
-    @Override
-    public List<MusicDTO> getDefaultPlaylist(String id) {
-        return musicDAO.getDefaultPlayList(id);
     }
 
     @Override
@@ -98,6 +93,11 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public int getMusicReviewCounts(int musicCode) {
         return musicDAO.getMusicReviewCounts(musicCode);
+    }
+
+    @Override
+    public List<MusicDTO> searchMusic(String query) {
+        return musicDAO.searchMusic(query);
     }
 
 }

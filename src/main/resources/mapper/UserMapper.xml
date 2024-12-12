@@ -10,7 +10,11 @@
     </select>
 
     <insert id="signUp" parameterType="User">
-        insert into user(id, password, artist, role) VALUES (#{id}, #{password}, #{artist}, default)
+        INSERT INTO user (id, password, artist, role) VALUES (#{id}, #{password}, #{artist}, default)
+    </insert>
+
+    <insert id="insertPlaylist" parameterType="User">
+        INSERT INTO playlist (playlist_code, id) VALUES ((select nextval('PLAYLIST_CODE_SEQ') from dual), #{id})
     </insert>
 
     <update id="updateProfile" parameterType="User">
@@ -30,14 +34,15 @@
     </update>
 
     <select id="getMyUploadList" parameterType="String" resultType="Music">
-        SELECT music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist
-        FROM music WHERE id = #{id}
+        SELECT music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id id, u.artist artist
+        FROM music m join user u on m.id = u.id WHERE u.id = #{id}
     </select>
 
     <select id="getMyFavoriteList" parameterType="String" resultType="Music">
-        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist
-        from music where music_code
-          in (select music_code from favorite where id = #{id} order by like_date desc)
+        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id id, u.artist artist
+        from music m join user u on m.id = u.id
+        where music_code
+                  in (select music_code from favorite where u.id = #{id} order by like_date desc)
     </select>
 
     <select id="getMyPlaylistList" parameterType="String" resultType="Playlist">

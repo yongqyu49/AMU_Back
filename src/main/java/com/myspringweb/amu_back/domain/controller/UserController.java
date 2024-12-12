@@ -152,32 +152,38 @@ public class UserController {
         }
     }
 
-    @GetMapping("/myUpload")
-    public ResponseEntity<List<MusicDTO>> myUpload(HttpSession session) {
-        String id = (String) session.getAttribute("id");
+    @GetMapping("/myUpload/{id}")
+    public ResponseEntity<List<MusicDTO>> myUpload(@PathVariable String id, HttpSession session) {
         List<MusicDTO> musicList = userService.getMyUploadList(id);
         return ResponseEntity.ok(musicList);
     }
 
-    @GetMapping("/myFavorite")
-    public ResponseEntity<List<MusicDTO>> myFavorite(HttpSession session) {
-        String id = (String) session.getAttribute("id");
+    @GetMapping("/myFavorite/{id}")
+    public ResponseEntity<List<MusicDTO>> myFavorite(@PathVariable String id, HttpSession session) {
         List<MusicDTO> musicList = userService.getMyFavoriteList(id);
         return ResponseEntity.ok(musicList);
     }
 
-    @GetMapping("/myReview")
-    public ResponseEntity<List<ReviewDTO>> myReview(HttpSession session) {
-        String id = (String) session.getAttribute("id");
+    @GetMapping("/myReview/{id}")
+    public ResponseEntity<List<ReviewDTO>> myReview(@PathVariable String id, HttpSession session) {
         List<ReviewDTO> reviewList = userService.getMyReviewList(id);
         return ResponseEntity.ok(reviewList);
     }
 
-    @GetMapping("/myPlaylist")
-    public ResponseEntity<List<PlaylistDTO>> myPlaylist(HttpSession session) {
-        String id = (String) session.getAttribute("id");
+    @GetMapping("/myPlaylist/{id}")
+    public ResponseEntity<List<PlaylistDTO>> myPlaylist(@PathVariable String id, HttpSession session) {
         List<PlaylistDTO> playlistList = userService.getMyPlaylistList(id);
         return ResponseEntity.ok(playlistList);
+    }
+
+    @GetMapping("/{artist}")
+    public ResponseEntity<UserDTO> getUserProfile(@PathVariable String artist) {
+        if(artist != null) {
+            UserDTO userDTO = userService.getUserById(artist);
+            return ResponseEntity.ok(userDTO);
+        } else {
+            return ResponseEntity.status(401).body(null);
+        }
     }
 
 }

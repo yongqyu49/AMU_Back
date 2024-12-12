@@ -11,11 +11,12 @@
     </insert>
 
     <select id="getAllMusic" resultType="Music">
-        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist from music
+        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id id, u.artist artist
+        from music m join user u on m.id = u.id
     </select>
 
     <select id="getMusicById" resultType="Music">
-        SELECT music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id artist, profile_img profileImg
+        SELECT music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id id, u.artist artist, profile_img profileImg
         FROM music m join user u on m.id = u.id WHERE music_code = #{id}
     </select>
 
@@ -30,14 +31,6 @@
 
     <select id="getAllMusicLatest" resultType="Music">
         select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, id artist from music order by release_date desc
-    </select>
-
-    <select id="getDefaultPlayList" parameterType="String" resultType="Music">
-        SELECT m.music_code musicCode, m.title, m.lyrics, m.release_date releaseDate, m.mp3_path mp3Path, m.img_path imgPath, m.file_size fileSize, m.runtime, m.views, m.genre_code genreCode, m.id artist
-        FROM music m
-                 JOIN playlist_music pm ON m.music_code = pm.music_code
-                 JOIN playlist p ON pm.playlist_code = p.playlist_code
-        WHERE p.id = #{id}
     </select>
 
     <insert id="likeMusic" parameterType="Favorite">
@@ -100,6 +93,12 @@
 
     <select id="getMusicReviewCounts" parameterType="Integer" resultType="Integer">
         select count(*) reviewCounts from review where music_code = #{musicCode}
+    </select>
+
+    <select id="searchMusic" parameterType="String" resultType="Music">
+        select music_code musicCode, title, lyrics, release_date releaseDate, mp3_path mp3Path, img_path imgPath, file_size fileSize, runtime, views, genre_code genreCode, m.id id, u.artist artist
+        from music m join user u on m.id = u.id
+        WHERE title LIKE CONCAT('%', #{query}, '%') OR u.artist LIKE CONCAT('%', #{query}, '%')
     </select>
 
 </mapper>

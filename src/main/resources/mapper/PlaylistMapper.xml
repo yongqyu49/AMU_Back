@@ -5,4 +5,24 @@
 
 <mapper namespace="playlist">
 
+    <select id="getDefaultPlaylist" parameterType="String" resultType="String">
+        select p.playlist_code playlistCode
+        from user u join playlist p on u.id = p.id
+        where u.id = #{id} and playlist_name = 'default_playlist';
+    </select>
+
+    <insert id="addMusicToPlaylist" parameterType="Playlist">
+         insert into playlist_music (music_code, playlist_code)
+         values (#{musicCode}, #{playlistCode})
+    </insert>
+
+    <select id="getDefaultPlaylistMusic" parameterType="String" resultType="Music">
+        SELECT m.music_code musicCode, m.title, m.lyrics, m.release_date releaseDate, m.mp3_path mp3Path, m.img_path imgPath, m.file_size fileSize, m.runtime, m.views, m.genre_code genreCode, m.id artist
+        FROM music m
+                 JOIN playlist_music pm ON m.music_code = pm.music_code
+                 JOIN playlist p ON pm.playlist_code = p.playlist_code
+        WHERE p.id = #{id}
+    </select>
+
+
 </mapper>

@@ -22,6 +22,8 @@ import java.sql.Timestamp;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.io.File;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,8 +41,8 @@ public class MusicController {
             @RequestParam("filePath1") String filePath1,
             @RequestParam("filePath2") String filePath2,
             @RequestParam("fileSize") String fileSize,
-//            @RequestParam("fileMp3") MultipartFile fileMp3,
-//            @RequestParam("fileImg") MultipartFile fileImg,
+            @RequestParam("fileMp3") MultipartFile fileMp3,
+            @RequestParam("fileImg") MultipartFile fileImg,
             @RequestParam("playTime") String playTime,
             @RequestParam("genre") Integer genre,
             HttpSession session) {
@@ -51,33 +53,52 @@ public class MusicController {
             System.out.println("업로드 데이터 확인");
             System.out.println("title: " + title);
             System.out.println("lyrics: " + lyrics);
-            System.out.println("filePath1: " + filePath1);
-            System.out.println("filePath2: " + filePath2);
+            System.out.println("filePath1: " + filePath1); //mp3파일 이름
+            System.out.println("filePath2: " + filePath2); //이미지 이름
+            System.out.println("fileMp3: " + fileMp3); //mp3파일 원본
+            System.out.println("fileImg: " + fileImg); //img파일 원본
             System.out.println("fileSize: " + fileSize);
             System.out.println("playTime: " + playTime);
             System.out.println("genre: " + genre);
             System.out.println("id: " + id);
             
-            String Mp3Path = uploadDir + "AMU Music/" + filePath1;
-            String ImgPath = uploadDir + "AMU_Img/" + filePath2;
-            System.out.println("음악 파일 경로: " + Mp3Path);
-            System.out.println("이미지 파일 경로: " + ImgPath);
+            // String Mp3Path = "AMU Music/" + filePath1;
+            // String ImgPath = "AMU_Img/" + filePath2;
+            // System.out.println("음악 파일 경로: " + Mp3Path);
+            // System.out.println("이미지 파일 경로: " + ImgPath);
 
             MusicDTO musicDTO = new MusicDTO();
             musicDTO.setTitle(title);
             musicDTO.setLyrics(lyrics);
-            musicDTO.setMp3Path(Mp3Path);
-            musicDTO.setImgPath(ImgPath);
             musicDTO.setFileSize(Long.parseLong(fileSize));
             musicDTO.setRuntime(Integer.parseInt(playTime));
             musicDTO.setGenreCode(genre);
             musicDTO.setReleaseDate(new Timestamp(System.currentTimeMillis()));
             musicDTO.setArtist(id);
-            System.out.println("Artist after setting: " + musicDTO.getArtist());  // 로그 추가
             musicDTO.setViews(1);
             
             System.out.println("삽입 데이터");
             System.out.println(musicDTO);
+            
+            // 이미지 파일 저장
+            String imgFileName = UUID.randomUUID().toString() + "_" + fileImg.getOriginalFilename();
+            String imgPath = "C:/AMU_asset/AMU_Img/" + imgFileName;
+            fileImg.transferTo(new File(imgPath));
+
+            musicDTO.setImgPath("AMU_Img/" + imgFileName);
+
+            // 음악 파일 저장
+            String mp3FileName = UUID.randomUUID().toString() + "_" + fileMp3.getOriginalFilename();
+            String mp3Path = "C:/AMU_asset/AMU Music/" + mp3FileName;
+            fileMp3.transferTo(new File(mp3Path));
+
+            System.out.println("imgPath: " + imgPath);
+            System.out.println("mp3Path: " + mp3Path);
+
+            // musicDTO.setImgPath("AMU_Img/" + imgFileName);
+            musicDTO.setMp3Path("AMU Music/" + mp3FileName);
+
+            // System.out.println("musicDTO: " + musicDTO);
             
             boolean isUploaded = musicService.uploadMusic(musicDTO);
             System.out.println("Service 호출");
@@ -136,6 +157,8 @@ public class MusicController {
        return ResponseEntity.ok(musicList);
    }
 
+//   @PostMapping()
+
     // 음악 목록 조회
     @PostMapping("/list")
     public ResponseEntity<List<MusicDTO>> getMusicList() {
@@ -190,14 +213,6 @@ public class MusicController {
                 return ResponseEntity.badRequest().body("리뷰 작성 실패");
             }
         }
-    }
-
-    @GetMapping("/getPlaylist")
-    public ResponseEntity<List<MusicDTO>> getPlaylist(HttpSession session) {
-        String id = (String)session.getAttribute("id");
-        List<MusicDTO> musicList = musicService.getDefaultPlaylist(id);
-//        System.out.println("음악 리스트: " + musicList);
-        return ResponseEntity.ok(musicList);
     }
 
     @GetMapping("/isLiked/{musicCode}")
@@ -266,6 +281,14 @@ public class MusicController {
     public ResponseEntity<Integer> musicDetailCommentCounts(@PathVariable String musicCode, HttpSession session) {
         int reviewCounts = musicService.getMusicReviewCounts(Integer.parseInt(musicCode));
         return ResponseEntity.ok(reviewCounts);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<MusicDTO>> searchMusic(@RequestParam("query") String query) {
+        System.out.println("검색어: " + query);
+        List<MusicDTO> results = musicService.searchMusic(query);
+        System.out.println("검색 결과: " + results);
+        return ResponseEntity.ok(results);
     }
 
 }

@@ -19,8 +19,6 @@ public interface MusicDAO {
 
     List<MusicDTO> getAllMusicLatest();
 
-    List<MusicDTO> getDefaultPlayList(String id);
-
     int likeMusic(FavoriteDTO favoriteDTO);
 
     int unlikeMusic(FavoriteDTO favoriteDTO);
@@ -34,4 +32,6 @@ public interface MusicDAO {
     List<ReviewDTO> getMusicReviewList(int musicCode);
 
     int getMusicReviewCounts(int musicCode);
+
+    List<MusicDTO> searchMusic(String query);
 }
