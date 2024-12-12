@@ -5,6 +5,12 @@
 
 <mapper namespace="music">
 
+    <update id="updateViews" parameterType="Integer">
+        UPDATE Music
+        SET views = views + 1
+        WHERE music_code = #{musicCode}
+    </update>
+
     <insert id="uploadMusic" parameterType="Music">
         insert into music(music_code, title, lyrics, mp3_path, img_path, genre_code, release_date, file_size, runtime, id, views)
         VALUES ((select nextval('MUSIC_CODE_SEQ') FROM dual), #{title}, #{lyrics}, #{mp3Path}, #{imgPath}, #{genreCode}, #{releaseDate}, #{fileSize}, #{runtime}, #{artist}, #{views})

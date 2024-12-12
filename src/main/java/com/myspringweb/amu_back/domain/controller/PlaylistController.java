@@ -40,6 +40,7 @@ public class PlaylistController {
 
     @PostMapping("/addMusic")
     public ResponseEntity<String> addMusicToPlaylist(@RequestBody Map<String, String> requestData, HttpSession session) {
+        System.out.println("addMusicToPlaylist 호출");
         String id = (String) session.getAttribute("id");
         String musicCode = requestData.get("musicCode");
         System.out.println("Received musicCode: " + musicCode);
