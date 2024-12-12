@@ -109,4 +109,9 @@ public class MusicServiceImpl implements MusicService {
     public int deleteMusic(int musicCode) {
         return musicDAO.deleteMusic(musicCode);
     }
+
+    @Override
+    public List<MusicDTO> getShowGenre(int genreCode) {
+        return musicDAO.getShowGenre(genreCode);
+    }
 }
