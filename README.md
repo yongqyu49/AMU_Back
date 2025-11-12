@@ -225,6 +225,6 @@ src/main/resources/
 
 이 프로젝트는 개인 프로젝트입니다.
 
-## 📧 연락처
+## 📧 프론트엔드
 
-프로젝트 링크: [https://github.com/yongqyu49/AMU_Back](https://github.com/yongqyu49/AMU_Back)
+프로젝트 링크: [https://github.com/yongqyu49/AMU_Front](https://github.com/yongqyu49/AMU_Front)
